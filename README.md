@@ -2,7 +2,7 @@
 
 ## IoT DevOps workshop 1
 
-In this first session we will set up a simple Azure IoT project and start preparing a CI/CD pipeline using GitHub and Travis-CI
+In this first session we will set up a simple Azure IoT project and start preparing a CI/CD pipeline using GitHub and GitHub Actions.
 
 The IoT example project is taken from <https://github.com/microsoft/IoT-For-Beginners/>
 

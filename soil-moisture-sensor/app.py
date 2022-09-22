@@ -1,13 +1,16 @@
 from counterfit_connection import CounterFitConnection
+from requests import JSONDecodeError
 CounterFitConnection.init('127.0.0.1', 5000)
+# http://127.0.0.1:5000/
 
 import time
 from counterfit_shims_grove.adc import ADC
 from counterfit_shims_grove.grove_relay import GroveRelay
 import json
 from azure.iot.device import IoTHubDeviceClient, Message, MethodResponse
+import os
 
-connection_string = '<connection_string>'
+connection_string = os.getenv('CONNECTION_STRING')
 
 adc = ADC()
 relay = GroveRelay(5)
@@ -32,7 +35,10 @@ def handle_method_request(request):
 device_client.on_method_request_received = handle_method_request
 
 while True:
-    soil_moisture = adc.read(0)
+    try:
+        soil_moisture = adc.read(0)
+    except JSONDecodeError:
+        soil_moisture = None
     print("Soil moisture:", soil_moisture)
 
     message = Message(json.dumps({ 'soil_moisture': soil_moisture }))
